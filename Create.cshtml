@@ -1,48 +1,27 @@
-﻿@model NimapProjectUsingADO.net.Models.Categoryy
+﻿
+@model NimapProjectUsingADO.net.Models.Productt
 
-@{
-    ViewData["Title"] = "Create";
-}
+<h1> createdata</h1>
 
-@if (TempData["message"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["message"]
-    </div>
-}
+@using (Html.BeginForm("Create", "Productt", FormMethod.Post))
 
-@if (TempData["exp"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["exp"]
-    </div>
-}
-@foreach (var item in (SelectList)ViewData["CategoryId"])
-{
-    <p>@item.Text</p>
-
-
-
-<form asp-action="Create" >
-
+    @Html.AntiForgeryToken()
 
     <div class="form-group">
-        <label asp-for="CategoryName" class="control-label"></label>
-        <input asp-for="CategoryName" class="form-control" />
-        <span asp-validation-for="CategoryName" class="text-danger"></span>
+        @Html.LabelFor(model => model.ProductName)
+        @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control" })
     </div>
+
+    
 
     <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        @Html.LabelFor(model => model.CategoryName)
+        @Html.DropDownListFor(model => model.CategoryId, (SelectList)ViewBag.CategoryId, "Select Category", new { @class = "form-control" })
     </div>
-</form>
 
-<div>
-    <a asp-action="Index">Back to Category List</a>
-</div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-}
+
+<br />
+@TempData["Message"]
 

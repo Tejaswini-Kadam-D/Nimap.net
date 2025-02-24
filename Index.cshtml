@@ -1,8 +1,7 @@
-﻿@model IEnumerable<NimapProjectUsingADO.net.Models.Categoryy>
+﻿@model IEnumerable<NimapProjectUsingADO.net.Models.Productt>
 
-    
 @{
-    ViewData["Title"] = "Index";
+    ViewBag.Title = "Product List";
     var pager = ViewBag.Pager;
 }
 <div class="container">
@@ -12,29 +11,41 @@
             @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
             {
                 <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="Category" asp-action="Index" asp-route-pg="@pge"> @pge </a>
+                    <a class="page-link" asp-controller="Productt" asp-action="Index" asp-route-pg="@pge"> @pge </a>
                 </li>
             }
         </ul>
     }
 </div>
 
-<div>
-<table class="table">
+
+<table class="table table-bordered">
     <thead>
         <tr>
-            <th>Category ID</th>
-            <th>Category Name</th>
+            <th>ProductId</th>
+            <th>ProductName</th>
+            <th>CategoryId</th>
+            <th>CategoryName</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var category in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@category.CategoryId</td>
-                <td>@category.CategoryName</td>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.CategoryId</td>
+                <td>@item.CategoryName</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.ProductId })">Edit</a> |
+                    <a href="@Url.Action("Delete", new { id = item.ProductId })">Delete</a>
+                </td>
             </tr>
+        
+        
         }
     </tbody>
 </table>
-</div>
+
+<a href="@Url.Action("Create")" class="btn btn-primary">Create New Product</a>
