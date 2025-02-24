@@ -1,0 +1,40 @@
+﻿@model IEnumerable<NimapProjectUsingADO.net.Models.Categoryy>
+
+    
+@{
+    ViewData["Title"] = "Index";
+    var pager = ViewBag.Pager;
+}
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Category" asp-action="Index" asp-route-pg="@pge"> @pge </a>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+<div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Category ID</th>
+            <th>Category Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.CategoryId</td>
+                <td>@category.CategoryName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
